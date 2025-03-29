@@ -47,20 +47,20 @@
   <!-- 広告エリア -->
   <div id="adContainer">
     <!-- admax -->
-    <script src="https://adm.shinobi.jp/s/1c98a05e5112d632eea60695e4420462"></script>
-    <!-- /admax -->
+    <script src="https://adm.shinobi.jp/s/ced8e79bb00e6ffca12988741a515417"></script>
+    <!-- admax -->
   </div>
 
   <!-- リンク表示エリア -->
   <div id="linkContainer"></div>
 
   <script>
-    // 離脱すべき時間：60秒（ミリ秒単位）
+    // 必要な離脱時間（ミリ秒）：60秒
     const REQUIRED_LEAVE_TIME = 60 * 1000;
 
-    // 表示したいリンク先のBase64エンコード文字列
-    // この例では "https://gofile.io/d/GBOX8R" をエンコードした結果です
-    const encodedLink = "aHR0cHM6Ly9nb2ZpbGUuaW8vZC9HQk9YOFI=";
+    // 表示したいリンク先をBase64エンコードした文字列
+    // 例: "https://gofile.io/d/qCN9ya" をエンコードした結果
+    const encodedLink = "aHR0cHM6Ly9nb2ZpbGUuaW8vZC9xQ045eWE=";
 
     // ページが非表示になった（タブを離れた）時刻を記録する変数
     let hiddenTime = null;
@@ -68,10 +68,8 @@
     // ページの表示状態の変化を監視
     document.addEventListener("visibilitychange", function() {
       if (document.hidden) {
-        // ページが非表示になった時刻を記録
         hiddenTime = Date.now();
       } else {
-        // ページに戻ったとき、記録された時刻があれば経過時間を計算
         if (hiddenTime !== null) {
           const elapsed = Date.now() - hiddenTime;
           if (elapsed >= REQUIRED_LEAVE_TIME) {
@@ -79,24 +77,22 @@
           } else {
             alert("まだ60秒経過していません。広告ページで60秒以上ご覧になってから戻ってきてください。");
           }
-          // 計測リセット
           hiddenTime = null;
         }
       }
     });
 
-    // リンク表示用の関数
+    // リンク表示のための関数
     function showLink() {
       const linkContainer = document.getElementById("linkContainer");
-      // すでにリンクが表示されていれば何もしない
       if (linkContainer.children.length > 0) return;
 
-      // Base64デコードして実際のURLを取得
+      // Base64をデコードして実際のURLを取得
       const decodedLink = atob(encodedLink);
       const anchor = document.createElement("a");
       anchor.href = decodedLink;
       anchor.target = "_blank";
-      // ボタンテキストを変更
+      // ボタンテキストの設定（必要に応じて変更可）
       anchor.textContent = "ダウンロードページへ移動する";
 
       linkContainer.appendChild(anchor);
